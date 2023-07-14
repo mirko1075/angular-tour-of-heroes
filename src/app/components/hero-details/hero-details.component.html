@@ -1,0 +1,103 @@
+<div *ngIf="viewMode">
+  <div *ngIf="currentHero?.Id">
+    <div>
+      <label><strong>Id:</strong></label> {{ currentHero.Id }}
+    </div>
+    <div>
+      <label><strong>Name:</strong></label>
+      {{ currentHero.Name }}
+    </div>
+
+    <a class="btn btn-warning" routerLink="/heroes/{{ currentHero.Id }}">
+      Edit
+    </a>
+  </div>
+  <div *ngIf="!currentHero">
+    <br />
+    <p>Please click on a Hero...</p>
+  </div>
+</div>
+<div *ngIf="!viewMode" [formGroup]="updateHeroForm">
+  <div *ngIf="currentHero.Id" class="edit-form">
+    <h4>Hero</h4>
+    <div class="form-group">
+      <label for="Id">Id</label>
+      <input
+        type="text"
+        class="form-control"
+        id="id"
+        required
+        name="id"
+        formControlName="Id"
+      />
+      <div
+        *ngIf="
+          updateHeroForm.get('Id')?.invalid &&
+          (updateHeroForm.get('Id')?.dirty || updateHeroForm.get('Id')?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="updateHeroForm.get('Id')?.errors?.['required']">
+          Id is required.
+        </div>
+        <div *ngIf="updateHeroForm.get('Id')?.errors?.['minlength']">
+          Id must be at least 2 characters long.
+        </div>
+        <div *ngIf="updateHeroForm.get('Id')?.errors?.['maxlength']">
+          Id must be not more than 4 characters long.
+        </div>
+        <div *ngIf="updateHeroForm.get('Id')?.errors?.['idValidErr']">
+          Id is already taken
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Name">Name</label>
+        <input
+          class="form-control"
+          id="name"
+          required
+          name="name"
+          formControlName="Name"
+        />
+        <div
+          *ngIf="
+            updateHeroForm.get('Name')?.invalid &&
+            (updateHeroForm.get('Name')?.dirty ||
+              updateHeroForm.get('Name')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="updateHeroForm.get('Name')?.errors?.['required']">
+            Name is required.
+          </div>
+          <div *ngIf="updateHeroForm.get('Name')?.errors?.['minlength']">
+            Id must be at least 8 characters long.
+          </div>
+          <div *ngIf="updateHeroForm.get('Name')?.errors?.['maxlength']">
+            Name must be not more than 50 characters long.
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-danger mr-5" (click)="deleteHero()">Delete</button>
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!updateHeroForm.valid"
+        (click)="updateHero()"
+      >
+        Update
+      </button>
+      <br />
+      <p
+        *ngIf="message.length"
+        class="badge {{ error ? 'badge-danger' : 'badge-success' }}"
+      >
+        {{ message }}
+      </p>
+    </div>
+  </div>
+  <div *ngIf="!currentHero.Id">
+    <br />
+    <p>Cannot access this Hero...</p>
+  </div>
+</div>

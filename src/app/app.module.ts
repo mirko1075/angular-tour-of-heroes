@@ -7,10 +7,12 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { OfflineDirective } from './directives/offline.directive';
+import { HeroDetailsComponent } from "./components/hero-details/hero-details.component";
 import { HeroesListComponent } from "./components/heroes-list/heroes-list.component";
 @NgModule({
   declarations: [
     AppComponent,
+    HeroDetailsComponent,
     HeroesListComponent,
     NavbarComponent,
     OfflineDirective,
